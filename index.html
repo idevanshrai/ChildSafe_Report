@@ -24,6 +24,11 @@
       overflow: hidden;
       z-index: -1;
     }
+
+    .userinfo{
+        text-align: center;
+    }
+
     .circle {
       position: absolute;
       border-radius: 50%;
@@ -163,6 +168,10 @@
 
 <form id="fraudForm">
   <!-- Form Fields Here -->
+  <div class="userinfo">
+    <h3>👨🏻‍🦰 User Information</h3>
+  </div>
+
   <label for="name">Name:</label>
   <input type="text" id="name" placeholder="Enter your name" required>
   
@@ -171,6 +180,10 @@
 
   <label for="phone">Phone Number:</label>
   <input type="tel" id="phone" placeholder="Enter your phone number" required>
+
+  <div class="userinfo">
+    <h3>🛬🏢 Incident Information</h3>
+  </div>
   
   <label for="dateOfIncident">Date of Incident:</label>
   <input type="date" id="dateOfIncident" required>
