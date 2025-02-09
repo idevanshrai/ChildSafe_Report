@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fraud Data Collection</title>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #1a1a2e;
+      overflow: hidden;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: float 20s infinite ease-in-out;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-50px) translateX(50px); }
+      100% { transform: translateY(0) translateX(0); }
+    }
+    .logo-container {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .logoC {
+      width: 260px;
+      height: 260px;
+      margin-top: 95px;
+      margin-left: 47px;
+      object-fit: contain;
+    }
+
+    .logoP{
+        width: 100px;
+        height: 100px;
+        margin-top: -35px;
+        object-fit: contain;
+    }
+    .container h1 {
+      color: #fff;
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 20px;
+      padding-right: 75px;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+    .container h3 {
+      color: #fff;
+      font-size: 1rem;
+      font-weight: lighter;
+      text-align: center;
+      margin-bottom: 20px;
+      padding-right: 75px;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+    .container h2 {
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: lighter;
+        text-align: center;
+        padding-right: 75px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+    form {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 25px;
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 700px;
+      overflow-y: auto;
+      max-height: 70vh;
+    }
+    form::-webkit-scrollbar {
+      width: 10px;
+    }
+    form::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #6a11cb, #2575fc);
+      border-radius: 10px;
+    }
+    form::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(to bottom, #5a0dbf, #1f63e2);
+    }
+    label {
+      font-weight: bold;
+      color: #333;
+      display: block;
+      margin-top: 20px;
+      font-size: 1.1rem;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border: 1px solid #ddd;
+      border-radius: 15px;
+      font-size: 16px;
+      box-sizing: border-box;
+      resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+    input:focus, textarea:focus {
+      border-color: #6a11cb;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(to right, #ff758c, #ff7eb3);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 25px;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: linear-gradient(to right, #ff5e62, #ff9966);
+    }
+  </style>
+</head>
+<body>
+
+<div class="background">
+  <div class="circle" style="width: 100px; height: 100px; top: 20%; left: 10%;"></div>
+  <div class="circle" style="width: 150px; height: 150px; top: 40%; left: 70%;"></div>
+  <div class="circle" style="width: 200px; height: 200px; top: 80%; left: 30%;"></div>
+  <div class="circle" style="width: 120px; height: 120px; top: 10%; left: 50%;"></div>
+</div>
+
+<div class="logo-container">
+  <img src="Clogo.png" alt="Logo 1" class="logoP">
+  <img src="Plogo.png" alt="Logo 2" class="logoC">
+</div>
+
+<div class="container">
+  <h2>In collaboration with Madhya Pradesh Police</h2>
+  <h1>Fraud Data Collection</h1>
+
+</div>
+
+<form id="fraudForm">
+  <!-- Form Fields Here -->
+  <label for="name">Name:</label>
+  <input type="text" id="name" placeholder="Enter your name" required>
+  
+  <label for="email">Email:</label>
+  <input type="email" id="email" placeholder="Enter your email" required>
+
+  <label for="phone">Phone Number:</label>
+  <input type="tel" id="phone" placeholder="Enter your phone number" required>
+  
+  <label for="dateOfIncident">Date of Incident:</label>
+  <input type="date" id="dateOfIncident" required>
+  
+  <label for="location">Location of Incident:</label>
+  <input type="text" id="location" placeholder="Enter the location of the incident">
+
+  <label for="amountLost">Amount Lost (in INR):</label>
+  <input type="number" id="amountLost" placeholder="Enter the amount lost" required>
+  
+  <label for="fraudType">Type of Fraud:</label>
+  <input type="text" id="fraudType" placeholder="e.g., Online scam, Credit card fraud" required>
+  
+  <label for="description">Description:</label>
+  <textarea id="description" placeholder="Describe what happened..." required></textarea>
+  
+  <button type="submit">Submit</button>
+</form>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDgjmN_iSl9WFrTwExHzgiAOJaV7SxsvKg",
+    authDomain: "childsafe-b5152.firebaseapp.com",
+    projectId: "childsafe-b5152",
+    storageBucket: "childsafe-b5152.appspot.com",
+    messagingSenderId: "1034738618018",
+    appId: "1:1034738618018:web:1936d7c6cec0ee4f4d51fb"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  document.getElementById('fraudForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      dateOfIncident: document.getElementById('dateOfIncident').value,
+      location: document.getElementById('location').value,
+      amountLost: parseFloat(document.getElementById('amountLost').value),
+      fraudType: document.getElementById('fraudType').value,
+      description: document.getElementById('description').value,
+      timestamp: serverTimestamp()
+    };
+
+    try {
+      await addDoc(collection(db, 'fraudReports'), formData);
+      alert('Fraud report submitted successfully!');
+      document.getElementById('fraudForm').reset();
+    } catch (error) {
+      console.error('Error submitting report:', error);
+      alert('Failed to submit the report. Please try again.');
+    }
+  });
+</script>
+
+</body>
+</html>
